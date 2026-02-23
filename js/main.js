@@ -212,14 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Contact Form =====
     const contactForm = document.getElementById('contact-form');
 
-    contactForm?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
+    contactForm?.addEventListener('submit', (e) => {
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData.entries());
 
         // Basic validation
         if (!data.name || !data.email || !data.project || !data.message) {
+            e.preventDefault();
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
@@ -227,23 +226,15 @@ document.addEventListener('DOMContentLoaded', () => {
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
+            e.preventDefault();
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             return;
         }
 
-        // Simulate form submission
+        // Show loading state (form will submit naturally to Formsubmit)
         const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Envoi en cours...';
         submitBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            showNotification('Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 24h.', 'success');
-            contactForm.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
     });
 
     // ===== Notification System =====

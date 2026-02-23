@@ -1,8 +1,8 @@
 /* ===== CSS Variables ===== */
 :root {
-    --color-primary: #2D5A3D;
-    --color-primary-dark: #1e3d29;
-    --color-primary-light: #3d7a52;
+    --color-primary: #3D5A4C;
+    --color-primary-dark: #2E4A3D;
+    --color-primary-light: #4D6A5C;
     --color-secondary: #8B5E3C;
     --color-secondary-light: #a67c5b;
     --color-accent: #C4A574;
@@ -119,13 +119,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .header.scrolled { box-shadow: var(--shadow-sm); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-.nav__logo-text {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-primary);
+.nav__logo-img {
+    height: 110px;
+    width: auto;
+    object-fit: contain;
+    margin: -15px 0;
 }
-.nav__logo-text span { color: var(--color-secondary); }
+@media (max-width: 768px) {
+    .nav__logo-img { height: 65px; }
+}
 .nav__list { display: flex; align-items: center; gap: 2rem; }
 .nav__link {
     font-size: 0.95rem;
@@ -186,7 +188,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     min-height: 100vh;
     display: flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    background: linear-gradient(135deg, rgba(61, 90, 76, 0.85) 0%, rgba(46, 74, 61, 0.9) 100%), url('../assets/ossature-bois.jpg') center/cover no-repeat;
     overflow: hidden;
 }
 .hero__overlay {
@@ -294,23 +296,8 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .about__image-placeholder {
     width: 100%;
     aspect-ratio: 4/5;
-    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-light) 100%);
+    background: url('../assets/construction en bois.jpg') center/cover no-repeat;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.about__image-placeholder::before {
-    content: '👷';
-    font-size: 5rem;
-    opacity: 0.4;
-}
-.about__image-placeholder::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="rgba(255,255,255,0.02)" width="50" height="50"/><rect fill="rgba(255,255,255,0.02)" x="50" y="50" width="50" height="50"/></svg>');
-    background-size: 30px 30px;
 }
 .about__image-badge {
     position: absolute;
@@ -417,6 +404,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .gallery__item--large { grid-column: span 2; }
 @media (max-width: 767px) { .gallery__item--large { grid-column: span 1; } }
+.gallery__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 4/3;
+    transition: transform 0.4s ease;
+}
+.gallery__item:hover .gallery__img { transform: scale(1.05); }
+.gallery__item--large .gallery__img { aspect-ratio: 16/9; }
 .gallery__placeholder {
     width: 100%;
     aspect-ratio: 4/3;
@@ -663,6 +659,9 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .footer__bottom p { font-size: 0.85rem; opacity: 0.6; }
 .footer__bottom a { font-size: 0.85rem; opacity: 0.6; }
 .footer__bottom a:hover { opacity: 1; }
+.footer__legal-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.footer__legal-links a { font-size: 0.85rem; opacity: 0.6; transition: var(--transition); }
+.footer__legal-links a:hover { opacity: 1; color: var(--color-accent); }
 
 /* ===== Floating CTA ===== */
 .floating-cta {
@@ -719,6 +718,24 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .lightbox__prev { left: 1rem; }
 .lightbox__next { right: 1rem; }
 .lightbox__prev:hover, .lightbox__next:hover { opacity: 1; }
+
+/* ===== Legal Pages ===== */
+.header--static { position: relative; background: var(--color-cream); border-bottom: 1px solid var(--color-cream-dark); }
+.legal-page { padding: 6rem 0 4rem; min-height: calc(100vh - 200px); }
+.legal-page h1 { font-family: var(--font-heading); font-size: 2.5rem; color: var(--color-primary); margin-bottom: 0.5rem; }
+.legal-page__updated { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 3rem; }
+.legal-section { margin-bottom: 2.5rem; }
+.legal-section h2 { font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-primary); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--color-accent); }
+.legal-section h3 { font-size: 1.1rem; font-weight: 600; color: var(--color-text); margin: 1.5rem 0 0.75rem; }
+.legal-section p { margin-bottom: 1rem; line-height: 1.8; }
+.legal-section ul { margin: 1rem 0 1rem 1.5rem; }
+.legal-section li { margin-bottom: 0.5rem; line-height: 1.7; }
+.legal-section a { color: var(--color-primary); text-decoration: underline; }
+.legal-section a:hover { color: var(--color-secondary); }
+@media (max-width: 768px) {
+    .legal-page h1 { font-size: 1.8rem; }
+    .legal-section h2 { font-size: 1.2rem; }
+}
 
 /* ===== Animations ===== */
 .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
