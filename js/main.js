@@ -212,13 +212,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== Contact Form =====
     const contactForm = document.getElementById('contact-form');
 
-    contactForm?.addEventListener('submit', (e) => {
+    contactForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
         const formData = new FormData(contactForm);
         const data = Object.fromEntries(formData.entries());
 
         // Basic validation
         if (!data.name || !data.email || !data.project || !data.message) {
-            e.preventDefault();
             showNotification('Veuillez remplir tous les champs obligatoires.', 'error');
             return;
         }
@@ -226,15 +227,37 @@ document.addEventListener('DOMContentLoaded', () => {
         // Email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(data.email)) {
-            e.preventDefault();
             showNotification('Veuillez entrer une adresse email valide.', 'error');
             return;
         }
 
-        // Show loading state (form will submit naturally to Formsubmit)
+        // Show loading state
         const submitBtn = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Envoi en cours...';
         submitBtn.disabled = true;
+
+        try {
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                showNotification('Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 24h.', 'success');
+                contactForm.reset();
+            } else {
+                showNotification('Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.', 'error');
+            }
+        } catch (error) {
+            showNotification('Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.', 'error');
+        } finally {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }
     });
 
     // ===== Notification System =====
