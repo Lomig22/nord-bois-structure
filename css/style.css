@@ -120,13 +120,13 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .header.scrolled { box-shadow: var(--shadow-sm); }
 .nav { display: flex; align-items: center; justify-content: space-between; height: 100%; }
 .nav__logo-img {
-    height: 110px;
+    height: 130px;
     width: auto;
     object-fit: contain;
-    margin: -15px 0;
+    margin: -25px 0;
 }
 @media (max-width: 768px) {
-    .nav__logo-img { height: 65px; }
+    .nav__logo-img { height: 75px; margin: -10px 0; }
 }
 .nav__list { display: flex; align-items: center; gap: 2rem; }
 .nav__link {
@@ -296,7 +296,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .about__image-placeholder {
     width: 100%;
     aspect-ratio: 4/5;
-    background: url('../assets/construction en bois.jpg') center/cover no-repeat;
+    background: url('../assets/charpente-construction-bois-toit-scaled.jpg') center/cover no-repeat;
     position: relative;
 }
 .about__image-badge {
