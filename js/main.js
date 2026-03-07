@@ -421,30 +421,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const slidePercentage = currentSlide * 100;
             testimonialsSlider.style.transform = `translateX(-${slidePercentage}%)`;
             
-            // Update arrow states
-            const totalSlides = getTotalSlides();
-            prevArrow.style.opacity = currentSlide === 0 ? '0.5' : '1';
-            prevArrow.style.cursor = currentSlide === 0 ? 'not-allowed' : 'pointer';
-            prevArrow.disabled = currentSlide === 0;
+            // Always show arrows as active (infinite loop)
+            prevArrow.style.opacity = '1';
+            prevArrow.style.cursor = 'pointer';
+            prevArrow.disabled = false;
             
-            nextArrow.style.opacity = currentSlide >= totalSlides - 1 ? '0.5' : '1';
-            nextArrow.style.cursor = currentSlide >= totalSlides - 1 ? 'not-allowed' : 'pointer';
-            nextArrow.disabled = currentSlide >= totalSlides - 1;
+            nextArrow.style.opacity = '1';
+            nextArrow.style.cursor = 'pointer';
+            nextArrow.disabled = false;
         };
 
         nextArrow.addEventListener('click', () => {
             const totalSlides = getTotalSlides();
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSlider();
+            currentSlide++;
+            
+            // Infinite loop: go back to start
+            if (currentSlide >= totalSlides) {
+                currentSlide = 0;
             }
+            
+            updateSlider();
         });
 
         prevArrow.addEventListener('click', () => {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlider();
+            const totalSlides = getTotalSlides();
+            currentSlide--;
+            
+            // Infinite loop: go to end
+            if (currentSlide < 0) {
+                currentSlide = totalSlides - 1;
             }
+            
+            updateSlider();
         });
 
         // Reset on resize
