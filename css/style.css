@@ -492,13 +492,15 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 60px;
+    overflow: hidden;
 }
 .testimonials__slider {
     display: flex;
     gap: 1.5rem;
-    overflow: hidden;
+    overflow: visible;
     transition: transform 0.5s ease;
     padding: 1rem 0;
+    width: 100%;
 }
 .testimonial {
     background: rgba(255,255,255,0.1);
