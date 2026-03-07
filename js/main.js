@@ -393,5 +393,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ===== Testimonials Slider =====
+    const testimonialsSlider = document.querySelector('.testimonials__slider');
+    const prevArrow = document.querySelector('.testimonials__arrow--prev');
+    const nextArrow = document.querySelector('.testimonials__arrow--next');
+
+    if (testimonialsSlider && prevArrow && nextArrow) {
+        let currentIndex = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        const totalTestimonials = testimonials.length;
+
+        // Get visible testimonials count based on screen size
+        const getVisibleCount = () => {
+            if (window.innerWidth >= 1024) return 3;
+            if (window.innerWidth >= 768) return 2;
+            return 1;
+        };
+
+        const updateSlider = () => {
+            const visibleCount = getVisibleCount();
+            const testimonialWidth = testimonials[0].offsetWidth;
+            const gap = 32; // 2rem gap
+            const scrollAmount = (testimonialWidth + gap) * currentIndex;
+            testimonialsSlider.style.transform = `translateX(-${scrollAmount}px)`;
+            
+            // Update arrow visibility
+            prevArrow.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            prevArrow.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
+            nextArrow.style.opacity = currentIndex >= totalTestimonials - visibleCount ? '0.5' : '1';
+            nextArrow.style.cursor = currentIndex >= totalTestimonials - visibleCount ? 'not-allowed' : 'pointer';
+        };
+
+        nextArrow.addEventListener('click', () => {
+            const visibleCount = getVisibleCount();
+            if (currentIndex < totalTestimonials - visibleCount) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        prevArrow.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+
+        // Reset on resize
+        window.addEventListener('resize', () => {
+            const visibleCount = getVisibleCount();
+            if (currentIndex >= totalTestimonials - visibleCount) {
+                currentIndex = Math.max(0, totalTestimonials - visibleCount);
+            }
+            updateSlider();
+        });
+
+        // Initial update
+        updateSlider();
+    }
+
     console.log('Nord Bois Structure - Site loaded successfully');
 });
