@@ -499,10 +499,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     content: '';
     position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
+    top: 1rem;
+    bottom: 1rem;
     width: 150px;
-    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 20%, rgba(61, 90, 76, 0.8) 40%, rgba(61, 90, 76, 0.4) 70%, transparent 100%);
+    background: linear-gradient(to right, transparent 0%, rgba(61, 90, 76, 0.4) 30%, rgba(61, 90, 76, 0.8) 60%, var(--color-primary) 80%, var(--color-primary) 100%);
     pointer-events: none;
     z-index: 5;
 }
@@ -511,10 +511,10 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     content: '';
     position: absolute;
     right: 0;
-    top: 0;
-    bottom: 0;
+    top: 1rem;
+    bottom: 1rem;
     width: 150px;
-    background: linear-gradient(to left, var(--color-primary) 0%, var(--color-primary) 20%, rgba(61, 90, 76, 0.8) 40%, rgba(61, 90, 76, 0.4) 70%, transparent 100%);
+    background: linear-gradient(to left, transparent 0%, rgba(61, 90, 76, 0.4) 30%, rgba(61, 90, 76, 0.8) 60%, var(--color-primary) 80%, var(--color-primary) 100%);
     pointer-events: none;
     z-index: 5;
 }
