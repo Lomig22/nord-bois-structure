@@ -495,26 +495,32 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 }
 .testimonials__slider {
     display: flex;
-    gap: 2rem;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
+    gap: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.5s ease;
     padding: 1rem 0;
 }
 .testimonial {
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(10px);
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255,255,255,0.1);
-    min-width: 100%;
-    flex-shrink: 0;
+    flex: 0 0 calc(33.333% - 1rem);
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
     transition: var(--transition);
 }
-@media (min-width: 768px) {
-    .testimonial { min-width: calc(50% - 1rem); }
+.testimonial blockquote {
+    flex: 1;
 }
-@media (min-width: 1024px) {
-    .testimonial { min-width: calc(33.333% - 1.33rem); }
+@media (max-width: 1024px) {
+    .testimonial { flex: 0 0 calc(50% - 0.75rem); }
+}
+@media (max-width: 768px) {
+    .testimonial { flex: 0 0 100%; min-height: 300px; }
+    .testimonials__slider-wrapper { padding: 0 50px; }
 }
 .testimonial__stars { color: #FFD700; font-size: 1.1rem; margin-bottom: 1rem; letter-spacing: 2px; }
 .testimonial blockquote {

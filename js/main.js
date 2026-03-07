@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextArrow = document.querySelector('.testimonials__arrow--next');
 
     if (testimonialsSlider && prevArrow && nextArrow) {
-        let currentIndex = 0;
+        let currentSlide = 0;
         const testimonials = document.querySelectorAll('.testimonial');
         const totalTestimonials = testimonials.length;
 
@@ -410,42 +410,54 @@ document.addEventListener('DOMContentLoaded', () => {
             return 1;
         };
 
+        // Calculate total slides
+        const getTotalSlides = () => {
+            const visibleCount = getVisibleCount();
+            return Math.ceil(totalTestimonials / visibleCount);
+        };
+
         const updateSlider = () => {
             const visibleCount = getVisibleCount();
-            const testimonialWidth = testimonials[0].offsetWidth;
-            const gap = 32; // 2rem gap
-            const scrollAmount = (testimonialWidth + gap) * currentIndex;
-            testimonialsSlider.style.transform = `translateX(-${scrollAmount}px)`;
+            const slidePercentage = currentSlide * 100;
+            testimonialsSlider.style.transform = `translateX(-${slidePercentage}%)`;
             
-            // Update arrow visibility
-            prevArrow.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            prevArrow.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
-            nextArrow.style.opacity = currentIndex >= totalTestimonials - visibleCount ? '0.5' : '1';
-            nextArrow.style.cursor = currentIndex >= totalTestimonials - visibleCount ? 'not-allowed' : 'pointer';
+            // Update arrow states
+            const totalSlides = getTotalSlides();
+            prevArrow.style.opacity = currentSlide === 0 ? '0.5' : '1';
+            prevArrow.style.cursor = currentSlide === 0 ? 'not-allowed' : 'pointer';
+            prevArrow.disabled = currentSlide === 0;
+            
+            nextArrow.style.opacity = currentSlide >= totalSlides - 1 ? '0.5' : '1';
+            nextArrow.style.cursor = currentSlide >= totalSlides - 1 ? 'not-allowed' : 'pointer';
+            nextArrow.disabled = currentSlide >= totalSlides - 1;
         };
 
         nextArrow.addEventListener('click', () => {
-            const visibleCount = getVisibleCount();
-            if (currentIndex < totalTestimonials - visibleCount) {
-                currentIndex++;
+            const totalSlides = getTotalSlides();
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
                 updateSlider();
             }
         });
 
         prevArrow.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
+            if (currentSlide > 0) {
+                currentSlide--;
                 updateSlider();
             }
         });
 
         // Reset on resize
+        let resizeTimer;
         window.addEventListener('resize', () => {
-            const visibleCount = getVisibleCount();
-            if (currentIndex >= totalTestimonials - visibleCount) {
-                currentIndex = Math.max(0, totalTestimonials - visibleCount);
-            }
-            updateSlider();
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const totalSlides = getTotalSlides();
+                if (currentSlide >= totalSlides) {
+                    currentSlide = Math.max(0, totalSlides - 1);
+                }
+                updateSlider();
+            }, 250);
         });
 
         // Initial update
