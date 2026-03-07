@@ -399,9 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const nextArrow = document.querySelector('.testimonials__arrow--next');
 
     if (testimonialsSlider && prevArrow && nextArrow) {
-        let currentSlide = 0;
-        const testimonials = document.querySelectorAll('.testimonial');
-        const totalTestimonials = testimonials.length;
+        const totalOriginal = 7; // Number of original testimonials
+        const cloneCount = 3; // Number of clones on each side
+        let currentIndex = cloneCount; // Start at first original card (after clones)
+        let isTransitioning = false;
 
         // Get visible testimonials count based on screen size
         const getVisibleCount = () => {
@@ -410,49 +411,54 @@ document.addEventListener('DOMContentLoaded', () => {
             return 1;
         };
 
-        // Calculate total slides
-        const getTotalSlides = () => {
+        const updateSlider = (transition = true) => {
             const visibleCount = getVisibleCount();
-            return Math.ceil(totalTestimonials / visibleCount);
-        };
-
-        const updateSlider = () => {
-            const visibleCount = getVisibleCount();
-            const slidePercentage = currentSlide * 100;
-            testimonialsSlider.style.transform = `translateX(-${slidePercentage}%)`;
+            // Each card is 33.333% width + gap (1rem ≈ 1%)
+            const cardWidthPercent = 33.333; // Card width as set in CSS
+            const gapPercent = 1; // Gap between cards (1rem)
+            const translateX = currentIndex * (cardWidthPercent + gapPercent);
             
-            // Always show arrows as active (infinite loop)
-            prevArrow.style.opacity = '1';
-            prevArrow.style.cursor = 'pointer';
-            prevArrow.disabled = false;
-            
-            nextArrow.style.opacity = '1';
-            nextArrow.style.cursor = 'pointer';
-            nextArrow.disabled = false;
-        };
-
-        nextArrow.addEventListener('click', () => {
-            const totalSlides = getTotalSlides();
-            currentSlide++;
-            
-            // Infinite loop: go back to start
-            if (currentSlide >= totalSlides) {
-                currentSlide = 0;
+            if (transition) {
+                testimonialsSlider.style.transition = 'transform 0.5s ease';
+            } else {
+                testimonialsSlider.style.transition = 'none';
             }
             
-            updateSlider();
+            testimonialsSlider.style.transform = `translateX(-${translateX}%)`;
+        };
+
+        const handleTransitionEnd = () => {
+            const visibleCount = getVisibleCount();
+            
+            // If we're at a clone at the end, jump to the real start
+            if (currentIndex >= cloneCount + totalOriginal) {
+                currentIndex = cloneCount;
+                updateSlider(false);
+            }
+            
+            // If we're at a clone at the beginning, jump to the real end
+            if (currentIndex < cloneCount) {
+                currentIndex = cloneCount + totalOriginal - visibleCount;
+                updateSlider(false);
+            }
+            
+            isTransitioning = false;
+        };
+
+        testimonialsSlider.addEventListener('transitionend', handleTransitionEnd);
+
+        nextArrow.addEventListener('click', () => {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex++;
+            updateSlider(true);
         });
 
         prevArrow.addEventListener('click', () => {
-            const totalSlides = getTotalSlides();
-            currentSlide--;
-            
-            // Infinite loop: go to end
-            if (currentSlide < 0) {
-                currentSlide = totalSlides - 1;
-            }
-            
-            updateSlider();
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex--;
+            updateSlider(true);
         });
 
         // Reset on resize
@@ -460,16 +466,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                const totalSlides = getTotalSlides();
-                if (currentSlide >= totalSlides) {
-                    currentSlide = Math.max(0, totalSlides - 1);
-                }
-                updateSlider();
+                updateSlider(false);
             }, 250);
         });
 
-        // Initial update
-        updateSlider();
+        // Initial position (start at first real card)
+        updateSlider(false);
     }
 
     console.log('Nord Bois Structure - Site loaded successfully');

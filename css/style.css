@@ -489,18 +489,44 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .testimonials .section__description { color: rgba(255,255,255,0.9); }
 .testimonials__slider-wrapper {
     position: relative;
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 0 70px;
     overflow: hidden;
+}
+/* Gradient fade effect on left side - covers partial cards */
+.testimonials__slider-wrapper::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    background: linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) 20%, rgba(61, 90, 76, 0.8) 40%, rgba(61, 90, 76, 0.4) 70%, transparent 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+/* Gradient fade effect on right side - covers partial cards */
+.testimonials__slider-wrapper::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 150px;
+    background: linear-gradient(to left, var(--color-primary) 0%, var(--color-primary) 20%, rgba(61, 90, 76, 0.8) 40%, rgba(61, 90, 76, 0.4) 70%, transparent 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+.testimonials__arrow {
+    z-index: 15;
 }
 .testimonials__slider {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     overflow: visible;
     transition: transform 0.5s ease;
     padding: 1rem 0;
-    width: 100%;
 }
 .testimonial {
     background: rgba(255,255,255,0.1);
@@ -508,7 +534,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     padding: 1.5rem;
     border-radius: var(--radius-md);
     border: 1px solid rgba(255,255,255,0.1);
-    flex: 0 0 calc(33.333% - 1rem);
+    flex: 0 0 calc(33.333% - 0.67rem);
     min-height: 350px;
     display: flex;
     flex-direction: column;
