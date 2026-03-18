@@ -126,13 +126,13 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     position: relative;
 }
 .nav__logo-img {
-    height: 130px;
+    height: 160px;
     width: auto;
     object-fit: contain;
-    margin: -25px 0;
+    margin: -40px 0;
 }
 @media (max-width: 768px) {
-    .nav__logo-img { height: 75px; margin: -10px 0; }
+    .nav__logo-img { height: 85px; margin: -15px 0; }
 }
 .nav__menu {
     flex: 1;
@@ -337,8 +337,74 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     border-radius: var(--radius-md);
     text-align: center;
 }
-.about__image-badge span { display: block; font-family: var(--font-heading); font-size: 2rem; font-weight: 700; }
+.about__image-badge span { display: block; font-size: 2rem; font-weight: 700; }
 .about__image-badge small { font-size: 0.75rem; opacity: 0.9; }
+
+/* ===== Compagnons Section ===== */
+.compagnons { background: var(--color-cream); }
+.compagnons__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+@media (min-width: 968px) { 
+    .compagnons__grid { 
+        grid-template-columns: 1fr 1fr; 
+        gap: 5rem; 
+    } 
+}
+.compagnons__image {
+    order: 2;
+}
+@media (min-width: 968px) {
+    .compagnons__image {
+        order: 1;
+    }
+    .compagnons__content {
+        order: 2;
+    }
+}
+.compagnons__img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+.compagnons__content p {
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+.compagnons__highlights {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.compagnons__highlight {
+    padding: 1.5rem;
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+    transition: var(--transition);
+}
+.compagnons__highlight:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+.compagnons__highlight strong {
+    display: block;
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+.compagnons__highlight p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin: 0;
+    line-height: 1.6;
+}
 
 /* ===== Services Section ===== */
 .services { background: var(--color-cream); }
