@@ -830,14 +830,16 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
     align-items: center;
     gap: 1rem;
     padding: 1.5rem 0;
+    position: relative;
 }
+.footer__bottom > p { flex: 1; }
 .footer__bottom p { font-size: 0.85rem; opacity: 0.6; }
 .footer__bottom a { font-size: 0.85rem; opacity: 0.6; }
 .footer__bottom a:hover { opacity: 1; }
 .footer__legal-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
 .footer__legal-links a { font-size: 0.85rem; opacity: 0.6; transition: var(--transition); }
 .footer__legal-links a:hover { opacity: 1; color: var(--color-accent); }
-.footer__credit { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; opacity: 0.6; transition: var(--transition); }
+.footer__credit { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; opacity: 0.6; transition: var(--transition); position: absolute; left: 50%; transform: translateX(-50%); }
 .footer__credit:hover { opacity: 1; }
 .footer__credit span { font-size: 0.85rem; color: inherit; white-space: nowrap; }
 .footer__credit-logo { height: 20px; width: auto; object-fit: contain; }
