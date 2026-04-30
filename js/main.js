@@ -247,8 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                showNotification('Merci ! Votre demande a bien été envoyée. Nous vous répondrons sous 24h.', 'success');
                 contactForm.reset();
+                window.location.href = '/merci.html';
             } else {
                 showNotification('Une erreur est survenue. Veuillez réessayer ou nous contacter par téléphone.', 'error');
             }
