@@ -840,7 +840,7 @@ input, textarea, select { font-family: inherit; font-size: inherit; }
 .footer__credit { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; opacity: 0.6; transition: var(--transition); }
 .footer__credit:hover { opacity: 1; }
 .footer__credit span { font-size: 0.85rem; color: inherit; white-space: nowrap; }
-.footer__credit-logo { height: 20px; width: auto; object-fit: contain; filter: brightness(0) invert(1); }
+.footer__credit-logo { height: 20px; width: auto; object-fit: contain; }
 
 /* ===== Floating CTA ===== */
 .floating-cta {
