@@ -245,8 +245,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Accept': 'application/json'
                 }
             });
+            const result = await response.json().catch(() => ({}));
 
-            if (response.ok) {
+            if (response.ok && result.ok !== false) {
                 contactForm.reset();
                 window.location.href = '/merci.html';
             } else {
